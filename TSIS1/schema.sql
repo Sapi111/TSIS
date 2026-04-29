@@ -1,24 +1,24 @@
 CREATE TABLE IF NOT EXISTS groups (
-    id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY, -- автоувеличивание 
     name VARCHAR(50) UNIQUE NOT NULL
 );
 
 INSERT INTO groups(name) VALUES
 ('Family'), ('Work'), ('Friend'), ('Other')
-ON CONFLICT DO NOTHING;
+ON CONFLICT DO NOTHING; -- повторный запуск не приводит ошибку
 
 CREATE TABLE IF NOT EXISTS contacts (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE NOT NULL,
     email VARCHAR(100),
     birthday DATE,
-    group_id INTEGER REFERENCES groups(id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    group_id INTEGER REFERENCES groups(id), --связь м/у таблес
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP --автоматом ставит текущее время
 );
 
 CREATE TABLE IF NOT EXISTS phones (
     id SERIAL PRIMARY KEY,
-    contact_id INTEGER REFERENCES contacts(id) ON DELETE CASCADE,
+    contact_id INTEGER REFERENCES contacts(id) ON DELETE CASCADE,--Если удалить контакт → телефоны тоже удалятся.
     phone VARCHAR(20),
     type VARCHAR(10) CHECK (type IN ('home','work','mobile'))
 );

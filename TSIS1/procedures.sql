@@ -1,7 +1,7 @@
 -- add_phone
 CREATE OR REPLACE PROCEDURE add_phone(p_name VARCHAR, p_phone VARCHAR, p_type VARCHAR)
 LANGUAGE plpgsql AS $$
-DECLARE cid INT;
+DECLARE cid INT; --переменная
 BEGIN
     SELECT id INTO cid FROM contacts WHERE name = p_name;
     IF cid IS NULL THEN
@@ -35,9 +35,9 @@ RETURNS TABLE(name TEXT, email TEXT, phone TEXT) AS $$
 BEGIN
     RETURN QUERY
     SELECT c.name, c.email, p.phone
-    FROM contacts c
+    FROM contacts c 
     LEFT JOIN phones p ON c.id = p.contact_id
-    WHERE c.name ILIKE '%' || p_query || '%'
+    WHERE c.name ILIKE '%' || p_query || '%'-- без учета регистра, ани символс,|| как + в питоне
        OR c.email ILIKE '%' || p_query || '%'
        OR p.phone ILIKE '%' || p_query || '%';
 END;

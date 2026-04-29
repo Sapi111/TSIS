@@ -1,5 +1,5 @@
 import json
-from connect import get_connection
+from connect import get_connection #conn=get_connection
 
 # --- ADD CONTACT ---
 def add_contact():
@@ -9,10 +9,10 @@ def add_contact():
     group = input("Group: ")
 
     conn = get_connection()
-    cur = conn.cursor()
+    cur = conn.cursor()# for send SQL inquiry(запрос)
 
-    cur.execute("SELECT id FROM groups WHERE name=%s", (group,))
-    g = cur.fetchone()
+    cur.execute("SELECT id FROM groups WHERE name=%s", (group,))# потом придет на место s, c зпятой т. к. тупле
+    g = cur.fetchone()# берет только первый попавшийся
 
     if not g:
         cur.execute("INSERT INTO groups(name) VALUES(%s) RETURNING id", (group,))
@@ -24,9 +24,9 @@ def add_contact():
         INSERT INTO contacts(name, email, birthday, group_id)
         VALUES (%s, %s, %s, %s)
         ON CONFLICT (name) DO NOTHING
-    """, (name, email, birthday, gid))
+    """, (name, email, birthday, gid)) #"""""" удоюно для многострочной скл
 
-    conn.commit()
+    conn.commit() # сохранить изменения
     cur.close()
     conn.close()
 
@@ -54,7 +54,7 @@ def search():
     conn = get_connection()
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM search_contacts(%s)", (q,))
+    cur.execute("SELECT * FROM search_contacts(%s)", (q,)) # в procedures.sql есть функция
     rows = cur.fetchall()
 
     for r in rows:
@@ -87,8 +87,8 @@ def filter_group():
 
 # --- EXPORT JSON ---
 def export_json():
-    conn = get_connection()
-    cur = conn.cursor()
+    conn = get_connection() # подключение к БД
+    cur = conn.cursor() # и курсор
 
     cur.execute("""
         SELECT c.name, c.email, c.birthday, g.name, p.phone, p.type
@@ -108,7 +108,7 @@ def export_json():
     conn.close()
 
 
-# --- IMPORT JSON ---
+# --- IMPORT JSON --- c json-> в БД
 def import_json():
     with open("contacts.json") as f:
         data = json.load(f)
@@ -172,5 +172,5 @@ def menu():
         elif ch == "0": break
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # если файл запущен напрямую то вызывает меню
     menu()
