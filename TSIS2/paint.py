@@ -9,7 +9,12 @@ from tools import *
 
 # главная функция
 def main():
-
+#* создаются кнопки
+#* создаётся палитра цветов
+#* задаются стартовые настройки
+#* запускается бесконечный цикл программы
+#* обрабатываются мышка и клавиатура
+#* рисуется экран
     # кнопки инструментов
     buttons = [
         Button(10, 10, 55, 20, "Pen", PEN),
@@ -24,21 +29,27 @@ def main():
         Button(195, 35, 60, 20, "RTri", RTRI),
         Button(260, 35, 60, 20, "ETri", ETRI),
         Button(325, 35, 70, 20, "Rhomb", RHOMB),
+        Button(500, 10, 35, 20, "S", "small"),
+        Button(540, 10, 35, 20, "M", "medium"),
+        Button(580, 10, 35, 20, "L", "large"),
+        Button(500, 35, 80, 20, "Clear", "clear"),
     ]
 
     # квадраты палитры
+    # варианты цветов справа сверху
     palette_rects = []
     for i in range(len(PALETTE)):
-        x = 560 + (i % 3) * 22
-        y = 10 + (i // 3) * 22
+        x = 720 + i * 24
+        y = 18
         palette_rects.append(pygame.Rect(x, y, 20, 20))
 
     # стартовые значения
+    # по дефолту при открытии инструмент и цвет и размер
     tool = PEN
     color = BLACK
     size = 5
 
-    drawing = False
+    drawing = False # для мышки при зажатии рисуетc x
     start = None
     preview = None
 
@@ -78,16 +89,16 @@ def main():
                 # ввод текста
                 if tool == TEXT and text_on:
 
-                    if event.key == pygame.K_RETURN:
+                    if event.key == pygame.K_RETURN:# ентер вставляет 
                         img = font.render(text, True, color)
                         canvas.blit(img, text_pos)
                         text = ""
                         text_on = False
 
-                    elif event.key == pygame.K_BACKSPACE:
+                    elif event.key == pygame.K_BACKSPACE: #удаляет послед элемент
                         text = text[:-1]
 
-                    elif event.key == pygame.K_ESCAPE:
+                    elif event.key == pygame.K_ESCAPE:# отменяет ввод
                         text = ""
                         text_on = False
 
@@ -97,17 +108,31 @@ def main():
             # нажали мышку
             if event.type == pygame.MOUSEBUTTONDOWN:
 
-                if event.button == 1:
+                if event.button == 1: # нажата левая
 
                     x, y = event.pos
 
                     # если верхняя панель
-                    if y < TOOLBAR_H:
+                    if y < TOOLBAR_H:# т. е. ниже 64 это в панелях 
 
                         # инструменты
                         for b in buttons:
                             if b.click((x, y)):
-                                tool = b.tool
+
+                                if b.tool == "small":
+                                    size = 2
+
+                                elif b.tool == "medium":
+                                    size = 5
+
+                                elif b.tool == "large":
+                                    size = 10
+
+                                elif b.tool == "clear":
+                                    canvas.fill(WHITE) # зливка на весь экран белым
+
+                                else:
+                                    tool = b.tool
 
                         # цвета
                         for i in range(len(palette_rects)):
@@ -118,7 +143,7 @@ def main():
                         # холст
                         cx, cy = to_canvas(x, y)
 
-                        if tool == FILL:
+                        if tool == FILL: # если инструмент заливка то заливка
                             flood_fill(canvas, (cx, cy), color)
 
                         elif tool == TEXT:
@@ -157,7 +182,7 @@ def main():
                     elif tool == ERASER:
                         pygame.draw.circle(canvas, WHITE, (cx, cy), size * 2)
 
-                    # превью фигур
+                    # превью фигур # то есть дает предварительную фотку пока не отпустишь
                     else:
                         preview = canvas.copy()
                         draw_shape(preview, tool, color, size, start, (cx, cy))
@@ -169,7 +194,7 @@ def main():
         show = preview if preview else canvas
         screen.blit(show, (0, TOOLBAR_H))
 
-        # временный текст
+        # временный текст # пока вводишь текст выходит |
         if text_on:
             img = font.render(text + "|", True, color)
             screen.blit(img, (text_pos[0], text_pos[1] + TOOLBAR_H))
