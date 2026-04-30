@@ -66,7 +66,7 @@ def _subtitle(surface, text, y, color=MUTED):
     surface.blit(lbl, (SCREEN_WIDTH // 2 - lbl.get_width() // 2, y))
 
 
-# ── Main Menu ─────────────────────────────────────────────────────────────────
+# ── Main Menu-РИСУЕТ МЕНЮ плэй сеттинг и т. п.  ─────────────────────────────────────────────────────────────────
 def main_menu(settings: dict) -> dict:
     """Returns {'action': 'play'|'quit'|'leaderboard'|'settings'}"""
     W = 200

@@ -143,7 +143,7 @@ class PlayerCar:
         self.nitro_timer  = 0    # frames remaining
         self.shield_hit   = False
 
-    def move(self, keys):
+    def move(self, keys): #движение машины но не давая выйти ей за пределы
         spd = self.speed + (4 if self.nitro else 0)
         if keys[pygame.K_LEFT]  and self.rect.left  > ROAD_LEFT:
             self.rect.x -= spd
@@ -186,7 +186,7 @@ class PlayerCar:
             pygame.draw.polygon(surface, NITRO_C, pts)
 
 
-# ── EnemyCar ──────────────────────────────────────────────────────────────────
+# ── МАШИНА ВРАГА ──────────────────────────────────────────────────────────────────
 class EnemyCar:
     WIDTH  = 46
     HEIGHT = 76
@@ -270,7 +270,7 @@ POWERUP_TIMEOUT = 8 * FPS    # frames before auto-disappear
 class PowerUp:
     RADIUS = 14
     SPEED  = 3
-    KINDS  = {
+    KINDS  = { # случацный выбор бонуса
         "nitro":  (NITRO_C,  "N", "Nitro"),
         "shield": (SHIELD_C, "S", "Shield"),
         "repair": (REPAIR_C, "R", "Repair"),
@@ -301,7 +301,7 @@ class PowerUp:
         surface.blit(lbl, (cx - lbl.get_width() // 2, cy - lbl.get_height() // 2))
 
 
-# ── Obstacle ──────────────────────────────────────────────────────────────────
+# ── ПРЕПЯТСТВИЯ ──────────────────────────────────────────────────────────────────
 class Obstacle:
     """Base class for road hazards."""
     SPEED = 4
@@ -370,7 +370,7 @@ class NitroStrip(Obstacle):
                            self.rect.centery - lbl.get_height() // 2))
 
 
-# ── Road drawing ──────────────────────────────────────────────────────────────
+# ── РИСУЕТ ДОРОГУ ──────────────────────────────────────────────────────────────
 def draw_road(surface, offset):
     surface.fill(GRASS)
     # Asphalt
@@ -385,7 +385,7 @@ def draw_road(surface, offset):
             pygame.draw.rect(surface, WHITE, (lx - 2, y, 4, 40))
 
 
-def draw_hud(surface, score, coins, distance, player, active_powerup, powerup_timer):
+def draw_hud(surface, score, coins, distance, player, active_powerup, powerup_timer): # ВЕРХНЮЮ ПАНЕЛЬ РИСУЕТ
     """Top HUD bar."""
     pygame.draw.rect(surface, (20, 20, 30), (0, 0, SCREEN_WIDTH, 44))
     pygame.draw.line(surface, GRAY, (0, 44), (SCREEN_WIDTH, 44), 1)

@@ -1,6 +1,4 @@
-"""
-persistence.py — Save / load leaderboard and settings to JSON files.
-"""
+
 
 import json
 import os
@@ -17,7 +15,7 @@ DEFAULT_SETTINGS = {
 
 # ── Settings ──────────────────────────────────────────────────────────────────
 
-def load_settings() -> dict:
+def load_settings() -> dict: #load_settings читает настройки из JSON. Если файла нет, возвращает дефолтные настройки.
     if os.path.exists(SETTINGS_FILE):
         try:
             with open(SETTINGS_FILE, "r") as f:
@@ -31,7 +29,7 @@ def load_settings() -> dict:
     return dict(DEFAULT_SETTINGS)
 
 
-def save_settings(settings: dict) -> None:
+def save_settings(settings: dict) -> None:#save_settings записывает настройки пользователя в settings.json.
     with open(SETTINGS_FILE, "w") as f:
         json.dump(settings, f, indent=2)
 
@@ -62,6 +60,6 @@ def add_entry(name: str, score: int, distance: int, coins: int) -> list:
     entries.append({"name": name, "score": score,
                     "distance": distance, "coins": coins})
     entries.sort(key=lambda e: e["score"], reverse=True)
-    entries = entries[:10]
+    entries = 1000000
     save_leaderboard(entries)
     return entries
