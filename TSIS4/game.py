@@ -1,6 +1,30 @@
+#Где класс змейки?                → game.py, class SnakeGame
+#Где стартовая змейка?            → game.py, __init__()
+#Где score/level/speed?           → game.py, __init__()
+#Где загружаются настройки?       → game.py, load_settings()
+#Где создаётся еда?               → game.py, spawn_empty()
+#Где создаётся poison?            → game.py, spawn_poison()
+#Где создаётся power-up?          → game.py, spawn_power()
+#Где создаются obstacles?         → game.py, spawn_obstacles()
+#Где безопасная позиция obstacle? → game.py, safe_obstacle_position()
+#Где меняется направление?        → game.py, set_dir()
+#Где запрет разворота назад?      → game.py, set_dir()
+#Где таймер power-up?             → game.py, apply_power_timer()
+#Где проверка столкновения?       → game.py, collision()
+#Где shield спасает от удара?     → game.py, handle_collision()
+#Где движение змейки?             → game.py, move()
+#Где змейка растёт?               → game.py, move(), if head == self.food
+#Где повышается level?            → game.py, move(), food_count % 5
+#Где poison уменьшает змейку?     → game.py, move(), elif head == self.poison
+#Где работают speed/slow/shield?  → game.py, move(), elif head == self.power
+#Где обновляется игра?            → game.py, update()
+#Где случайный spawn poison?      → game.py, update()
+#Где случайный spawn power-up?    → game.py, update()
+
 import pygame
 import random
 import json
+
 
 
 CELL = 20
@@ -157,6 +181,8 @@ class SnakeGame:
         self.snake.insert(0, head)
 
         if head == self.food:
+            if self.sound:
+                eat_sound.play()
             self.score += 10
             self.food_count += 1
             self.food = self.spawn_empty()

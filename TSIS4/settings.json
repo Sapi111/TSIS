@@ -1,9 +1,9 @@
 {
     "color": [
-        255,
         0,
+        255,
         0
     ],
-    "grid": false,
+    "grid": true,
     "sound": true
 }

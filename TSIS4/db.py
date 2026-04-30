@@ -1,3 +1,11 @@
+#Где подключение к базе?          → db.py, connect()
+#где ищется игрок по username?    → db.py, get_player_id()
+#Где создаётся новый игрок?       → db.py, get_player_id()
+#Где сохраняется результат игры?  → db.py, save_game()
+#Где берётся Top 10?              → db.py, get_top10()
+#Где JOIN players и sessions?     → db.py, get_top10()
+#Где личный рекорд игрока?        → db.py, get_best()
+#Где MAX(score)?                  → db.py, get_best()
 import psycopg2
 from config import load_config
 

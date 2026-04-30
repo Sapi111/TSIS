@@ -1,1 +1,14 @@
-1000000
+[
+  {
+    "name": "tima",
+    "score": 436,
+    "distance": 663,
+    "coins": 42
+  },
+  {
+    "name": "tima",
+    "score": 13,
+    "distance": 40,
+    "coins": 1
+  }
+]

@@ -1,9 +1,9 @@
-"""
-ui.py — All non-gameplay screens drawn purely with Pygame.
-Screens: MainMenu, NameEntry, Settings, Leaderboard, GameOver.
-Each function returns a dict describing what to do next.
-"""
-
+#Где кнопки Play/Settings?       → ui.py, main_menu()
+#Где ввод имени?                 → ui.py, name_entry()
+#Где меняется цвет машины?       → ui.py, settings_screen()
+#Где меняется сложность?         → ui.py, settings_screen()
+#Где показывается leaderboard?   → ui.py, leaderboard_screen()
+#Где экран Game Over?            → ui.py, game_over_screen()
 import pygame
 import sys
 from racer import (
@@ -106,7 +106,7 @@ def main_menu(settings: dict) -> dict:
                 return {"action": "play"}
 
 
-# ── Name Entry ────────────────────────────────────────────────────────────────
+# ── Name Entry-ИМЯ ИГРОКА КОТОРЫЙ ВВОДИТ ────────────────────────────────────────────────────────────────
 def name_entry() -> str:
     """Prompt the player for their name; return the name string."""
     name = ""
@@ -139,7 +139,7 @@ def name_entry() -> str:
                     name += event.unicode
 
 
-# ── Settings ──────────────────────────────────────────────────────────────────
+# ── Settings-ЗВУК,СЛОЖНОСТЬ,ЦВЕТ ──────────────────────────────────────────────────────────────────
 def settings_screen(settings: dict) -> dict:
     """Mutates and saves settings in place; returns updated settings dict."""
     s = dict(settings)
@@ -203,7 +203,7 @@ def settings_screen(settings: dict) -> dict:
                 return s
 
 
-# ── Leaderboard ───────────────────────────────────────────────────────────────
+# ── Leaderboard-РЕЗЫ С ЖСОН ТОП 10 ───────────────────────────────────────────────────────────────
 def leaderboard_screen() -> None:
     entries = load_leaderboard()
     back    = Button("← Back", SCREEN_WIDTH // 2 - 70, SCREEN_HEIGHT - 60, 140, (80, 80, 80))
@@ -242,7 +242,7 @@ def leaderboard_screen() -> None:
                 return
 
 
-# ── Game Over ─────────────────────────────────────────────────────────────────
+# ── Game Over-РЕЗ ПОСЛЕ ПРОИГРЫША ─────────────────────────────────────────────────────────────────
 def game_over_screen(name: str, score: int, distance: int, coins: int) -> str:
     """
     Show game-over screen.

@@ -1,3 +1,4 @@
+#подключения к постгре
 def load_config():
     return {
         "host": "localhost",

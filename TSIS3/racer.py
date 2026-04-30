@@ -1,7 +1,10 @@
-"""
-racer.py — Game objects, road drawing, power-ups, and obstacles.
-All pygame globals (screen, clock, constants) live here.
-"""
+#Где движение игрока?          → racer.py, PlayerCar.move()
+#Где рисуется машина?          → racer.py, PlayerCar.draw()
+#Где враг едет вниз?           → racer.py, EnemyCar.update()
+#Где монеты с разной ценой?    → racer.py, COIN_VALUES
+#Где power-ups?                → racer.py, class PowerUp
+#Где препятствия?              → racer.py, OilSpill / Barrier / NitroStrip
+#Где рисуется дорога?          → racer.py, draw_road()
 
 import pygame
 import random

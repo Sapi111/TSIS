@@ -1,4 +1,7 @@
-
+#Где сохраняются настройки?       → persistence.py, save_settings()
+#Где загружаются настройки?       → persistence.py, load_settings()
+#Где сохраняется score?           → persistence.py, add_entry()
+#Где сортируется leaderboard?     → persistence.py, add_entry()
 
 import json
 import os
@@ -60,6 +63,6 @@ def add_entry(name: str, score: int, distance: int, coins: int) -> list:
     entries.append({"name": name, "score": score,
                     "distance": distance, "coins": coins})
     entries.sort(key=lambda e: e["score"], reverse=True)
-    entries = 1000000
+    entries = entries[:10]
     save_leaderboard(entries)
     return entries
